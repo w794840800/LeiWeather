@@ -18,12 +18,16 @@ import java.util.ArrayList;
 public class ChooseRecyclerAdapter extends RecyclerView.Adapter {
     ArrayList<String>mStringArrayList;
     Context mContext;
+    OnItemClickListener onItemClickListener;
     public ChooseRecyclerAdapter(Context context, ArrayList<String>list){
         mContext = context;
         mStringArrayList = list;
 
     }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        onItemClickListener = listener;
 
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -32,10 +36,16 @@ public class ChooseRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         ((TextView)(holder.itemView)).setText(mStringArrayList.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                onItemClickListener.onItemClick(view,position);
+            }
+        });
     }
 
     @Override
@@ -48,5 +58,8 @@ public class ChooseRecyclerAdapter extends RecyclerView.Adapter {
         super(itemView);
     }
 }
+    public interface OnItemClickListener{
+    void onItemClick(View v,int position);
 
+}
 }
