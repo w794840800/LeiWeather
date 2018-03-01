@@ -19,6 +19,8 @@ android {
 }
 
 dependencies {
+    compile 'org.litepal.android:core:1.6.1'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'

@@ -1,10 +1,12 @@
 package com.example.raise.leiweather.db;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by raise on 18-3-1.
  */
 
-public class Country {
+public class Country extends DataSupport {
 
     private int id;
     private String countryName;
