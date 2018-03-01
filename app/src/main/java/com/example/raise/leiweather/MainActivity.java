@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        HttpUtils.sendOkHttpRequest("http://guolin.tech/api/china/", new Callback() {
+       /* HttpUtils.sendOkHttpRequest("http://guolin.tech/api/china/", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -30,8 +30,38 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d("wanglei", "onResponse: "+(response.body().string()));
 
                 Utility.handleProvinceJson(response.body().string());
+
             }
         });
 
-    }
+
+        HttpUtils.sendOkHttpRequest("http://guolin.tech/api/china/13", new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //Log.d("wanglei", "onResponse: "+(response.body().string()));
+
+                Utility.handleCityJson(response.body().string(),13);
+
+            }
+        });
+        HttpUtils.sendOkHttpRequest("http://guolin.tech/api/china/13/67", new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //Log.d("wanglei", "onResponse: "+(response.body().string()));
+
+                Utility.handleCountryJson(response.body().string(),67);
+
+            }
+        });
+   */ }
 }
