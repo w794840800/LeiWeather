@@ -50,11 +50,11 @@ public class ChooseFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.choose_area,container,false);
         mDateList = new ArrayList<>();
-        mChooseRecyclerAdapter = new ChooseRecyclerAdapter(getContext(),mDateList);
-
+        mChooseRecyclerAdapter = new ChooseRecyclerAdapter(getActivity(),mDateList);
+        select_tv = (TextView) view.findViewById(R.id.choose_text);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
             back_bt = (Button) view.findViewById(R.id.back_bt);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mChooseRecyclerAdapter);
         return view;
     }
@@ -100,7 +100,13 @@ public class ChooseFragment extends Fragment{
                 if (type.equals("province")){
 
                     Utility.handleProvinceJson(response.body().string());
-                    queryProvince();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            queryProvince();
+
+                        }
+                    });
 
                 }else if (type.equals("city")){
 

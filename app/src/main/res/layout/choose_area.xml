@@ -20,6 +20,7 @@
         android:background="@null"
         />
     <TextView
+        android:id="@+id/choose_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="hello"
