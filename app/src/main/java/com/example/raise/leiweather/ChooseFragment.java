@@ -68,14 +68,45 @@ public class ChooseFragment extends Fragment{
             @Override
             public void onItemClick(View v, int position) {
 
-                Toast.makeText(getActivity()," "+position,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity()," "+position,Toast.LENGTH_SHORT).show();
 
-                selectProvince = mProvinceList.get(position);
+
               if (currentLevel==0){
+                  selectProvince = mProvinceList.get(position);
                 queryCity();
+              }else if (currentLevel==1){
+
+                  selectCity = mCityList.get(position);
+                  Log.d("wanglei1", " selectCity= "+selectCity.getCityName()+" "+selectCity.getId());
+
+                  queryCountry();
+
+              }else if (currentLevel==2){
+
+                  selectCountry = mCountryArrayList.get(position);
+                  Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                  intent.putExtra("weatherId",selectCountry.getWeatherId());
+                  intent.putExtra("cityName",selectCountry.getCountryName());
+                  getActivity().startActivity(intent);
+                  getActivity().finish();
               }
             }
         });
+
+
+        back_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentLevel ==1){
+
+                    queryProvince();
+                }else if (currentLevel==2){
+                    queryCity();
+                }
+
+            }
+        });
+
         queryProvince();
     }
 
@@ -135,6 +166,7 @@ public class ChooseFragment extends Fragment{
                        }
                    });
                 }else{
+
                     Utility.handleCountryJson(response.body().string(),selectCity.getId());
 getActivity().runOnUiThread(new Runnable() {
     @Override
@@ -154,7 +186,9 @@ getActivity().runOnUiThread(new Runnable() {
 
         back_bt.setVisibility(View.VISIBLE);
         select_tv.setText(selectCity.getCityName());
-        mCountryArrayList = (ArrayList<Country>) DataSupport.where("id",String.valueOf(selectCountry.getId())).find(Country.class);
+        mCountryArrayList = (ArrayList<Country>)
+                DataSupport.where("cityId=?",String.valueOf(selectCity.getId())).find(Country.class);
+        Log.d("as", "queryCountry: mCountryArrayList = "+mCountryArrayList.size());
         if (mCountryArrayList.size()>0){
             mDateList.clear();
 
@@ -163,10 +197,19 @@ getActivity().runOnUiThread(new Runnable() {
                 mDateList.add(country.getCountryName());
             }
             currentLevel = 2;
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    mChooseRecyclerAdapter.notifyDataSetChanged();
+                }
+            });
         }else{
 
-            String address = "http://guolin.tech/api/china/"+selectProvince.getProviceCode()+selectCity.getCityCode();
-            queryFromServer(address,"country");
+            String address = "http://guolin.tech/api/china/"+selectProvince.getProviceCode()+"/"+selectCity.getCityCode();
+
+            Log.d("wanglei "," country address= "+address+" getProviceCode= "+selectProvince.getProviceCode());
+                    queryFromServer(address,"country");
         }
 
     }

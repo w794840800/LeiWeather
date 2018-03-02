@@ -1,9 +1,13 @@
 package com.example.raise.leiweather;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.raise.leiweather.bean.Weather;
 import com.example.raise.leiweather.utils.HttpUtils;
 import com.example.raise.leiweather.utils.Utility;
 
@@ -19,7 +23,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       /* HttpUtils.sendOkHttpRequest("http://guolin.tech/api/china/", new Callback() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(sharedPreferences.getString("weather",null)!=null){
+
+            Intent intent = new Intent(this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
+        /* HttpUtils.sendOkHttpRequest("http://guolin.tech/api/china/", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
