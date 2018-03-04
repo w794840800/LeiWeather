@@ -4,11 +4,15 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,12 +56,19 @@ public class WeatherActivity extends AppCompatActivity {
     TextView sport_text;
     @BindView(R.id.weather_bg)
     ImageView weather_bg;
+    @BindView(R.id.swipe_refresh)
+    public SwipeRefreshLayout swipeRefreshLayout;
     TextView date_text;
     TextView info_text;
     TextView max_temp;
     TextView min_temp;
+    @BindView(R.id.nav_button)
+    Button nav_button;
     /*@BindView(R.id.foreast_item)
     LinearLayout foreast_item;*/
+    String weatherId;
+    //@BindView(R.id.drawer)
+    public DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +83,23 @@ public class WeatherActivity extends AppCompatActivity {
         //String cityName = getIntent().getStringExtra("cityName");
         //toobar_city.setText(cityName);
         ButterKnife.bind(this);
-        String weatherId = getIntent().getStringExtra("weatherId");
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        weatherId = getIntent().getStringExtra("weatherId");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        nav_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
         if (sharedPreferences.getString("weather","")!=null){
             Weather weather = Utility.handleWeatherResponse(sharedPreferences.getString("weather",""));
+            weatherId = weather.getHeWeather5().get(0)
+                    .getBasic().getId();
 
-            showWeatherInfo(weather);
+                    showWeatherInfo(weather);
 
         }else{
 
@@ -90,7 +112,12 @@ public class WeatherActivity extends AppCompatActivity {
        }else{
            loadWeatherbg();
        }
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(weatherId);
+            }
+        });
 
 
     }
@@ -108,7 +135,7 @@ public class WeatherActivity extends AppCompatActivity {
                 final String picUrl = response.body().string();
                 Log.d("wl123", "onResponse: picurl= "+picUrl);
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this)
-                        .edit();
+                           .edit();
                 editor.putString("bing_pic",picUrl);
                 editor.apply();
                     runOnUiThread(new Runnable() {
@@ -123,7 +150,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    private void requestWeather(final String weatherId) {
+    public void requestWeather(final String weatherId) {
 //https://free-api.heweather.com/v5/weather?city
         HttpUtils.sendOkHttpRequest("https://free-api.heweather.com/v5/weather?city=" +
                 weatherId+"&key=cb57347356fb435a891c952e5166a9ed", new Callback() {
@@ -146,6 +173,7 @@ public class WeatherActivity extends AppCompatActivity {
                     editor.commit();
                     showWeatherInfo(weather);
                     loadWeatherbg();
+
                 }
             }
         });    }
@@ -213,6 +241,7 @@ public class WeatherActivity extends AppCompatActivity {
                    .getSuggestion().getCw().getTxt());
                    sport_text.setText(weather.getHeWeather5().get(0)
                    .getSuggestion().getUv().getTxt());
+               swipeRefreshLayout.setRefreshing(false);
                }
 
            }
