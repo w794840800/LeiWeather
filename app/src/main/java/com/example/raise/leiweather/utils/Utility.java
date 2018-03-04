@@ -49,7 +49,7 @@ public class Utility {
   public static Weather handleWeatherResponse(String response){
 
       Weather weather = new Gson().fromJson(response,Weather.class);
-      Log.d(TAG, "handleWeatherResponse: weather = "+weather.getHeWeather6().get(0).getBasic().getCnty());
+      Log.d(TAG, "handleWeatherResponse: weather = "+weather.getHeWeather5().get(0).getBasic().getCnty());
       return weather;
   }
 

@@ -9,28 +9,44 @@ import java.util.List;
 public class Weather {
 
 
-    private List<HeWeather6Bean> HeWeather6;
+    private List<HeWeather5Bean> HeWeather5;
 
-    public List<HeWeather6Bean> getHeWeather6() {
-        return HeWeather6;
+    public List<HeWeather5Bean> getHeWeather5() {
+        return HeWeather5;
     }
 
-    public void setHeWeather6(List<HeWeather6Bean> HeWeather6) {
-        this.HeWeather6 = HeWeather6;
+    public void setHeWeather5(List<HeWeather5Bean> HeWeather5) {
+        this.HeWeather5 = HeWeather5;
     }
 
-    public static class HeWeather6Bean {
+    public static class HeWeather5Bean {
         /**
-         * basic : {"cid":"CN101010100","location":"北京","parent_city":"北京","admin_area":"北京","cnty":"中国","lat":"39.90498734","lon":"116.40528870","tz":"8.0"}
-         * daily_forecast : [{"cond_code_d":"103","cond_code_n":"101","cond_txt_d":"晴间多云","cond_txt_n":"多云","date":"2017-10-26","hum":"57","pcpn":"0.0","pop":"0","pres":"1020","tmp_max":"16","tmp_min":"8","uv_index":"3","vis":"16","wind_deg":"0","wind_dir":"无持续风向","wind_sc":"微风","wind_spd":"5"},{"cond_code_d":"101","cond_code_n":"501","cond_txt_d":"多云","cond_txt_n":"雾","date":"2017-10-27","hum":"56","pcpn":"0.0","pop":"0","pres":"1018","tmp_max":"18","tmp_min":"9","uv_index":"3","vis":"20","wind_deg":"187","wind_dir":"南风","wind_sc":"微风","wind_spd":"6"},{"cond_code_d":"101","cond_code_n":"101","cond_txt_d":"多云","cond_txt_n":"多云","date":"2017-10-28","hum":"26","pcpn":"0.0","pop":"0","pres":"1029","tmp_max":"17","tmp_min":"5","uv_index":"2","vis":"20","wind_deg":"2","wind_dir":"北风","wind_sc":"3-4","wind_spd":"19"}]
+         * alarms : [{"level":"蓝色","stat":"预警中","title":"山东省青岛市气象台发布大风蓝色预警","txt":"青岛市气象台2016年08月29日15时24分继续发布大风蓝色预警信号：预计今天下午到明天，我市北风风力海上6到7级阵风9级，陆地4到5阵风7级，请注意防范。","type":"大风"}]
+         * aqi : {"city":{"aqi":"60","co":"0","no2":"14","o3":"95","pm10":"67","pm25":"15","qlty":"良","so2":"10"}}
+         * basic : {"city":"青岛","cnty":"中国","id":"CN101120201","lat":"36.088000","lon":"120.343000","prov":"山东","update":{"loc":"2016-08-30 11:52","utc":"2016-08-30 03:52"}}
+         * daily_forecast : [{"astro":{"mr":"03:09","ms":"17:06","sr":"05:28","ss":"18:29"},"cond":{"code_d":"100","code_n":"100","txt_d":"晴","txt_n":"晴"},"date":"2016-08-30","hum":"45","pcpn":"0.0","pop":"8","pres":"1005","tmp":{"max":"29","min":"22"},"vis":"10","wind":{"deg":"339","dir":"北风","sc":"4-5","spd":"24"}}]
+         * hourly_forecast : [{"cond":{"code":"100","txt":"晴"},"date":"2016-08-30 12:00","hum":"47","pop":"0","pres":"1006","tmp":"29","wind":{"deg":"335","dir":"西北风","sc":"4-5","spd":"36"}}]
+         * now : {"cond":{"code":"100","txt":"晴"},"fl":"28","hum":"41","pcpn":"0","pres":"1005","tmp":"26","vis":"10","wind":{"deg":"330","dir":"西北风","sc":"6-7","spd":"34"}}
          * status : ok
-         * update : {"loc":"2017-10-26 23:09","utc":"2017-10-26 15:09"}
+         * suggestion : {"comf":{"brf":"较舒适","txt":"白天天气晴好，您在这种天气条件下，会感觉早晚凉爽、舒适，午后偏热。"},"cw":{"brf":"较不宜","txt":"较不宜洗车，未来一天无雨，风力较大，如果执意擦洗汽车，要做好蒙上污垢的心理准备。"},"drsg":{"brf":"热","txt":"天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。"},"flu":{"brf":"较易发","txt":"虽然温度适宜但风力较大，仍较易发生感冒，体质较弱的朋友请注意适当防护。"},"sport":{"brf":"较适宜","txt":"天气较好，但风力较大，推荐您进行室内运动，若在户外运动请注意防风。"},"trav":{"brf":"适宜","txt":"天气较好，风稍大，但温度适宜，是个好天气哦。适宜旅游，您可以尽情地享受大自然的无限风光。"},"uv":{"brf":"强","txt":"紫外线辐射强，建议涂擦SPF20左右、PA++的防晒护肤品。避免在10点至14点暴露于日光下。"}}
          */
 
+        private AqiBean aqi;
         private BasicBean basic;
+        private NowBean now;
         private String status;
-        private UpdateBean update;
+        private SuggestionBean suggestion;
+        private List<AlarmsBean> alarms;
         private List<DailyForecastBean> daily_forecast;
+        private List<HourlyForecastBean> hourly_forecast;
+
+        public AqiBean getAqi() {
+            return aqi;
+        }
+
+        public void setAqi(AqiBean aqi) {
+            this.aqi = aqi;
+        }
 
         public BasicBean getBasic() {
             return basic;
@@ -38,6 +54,14 @@ public class Weather {
 
         public void setBasic(BasicBean basic) {
             this.basic = basic;
+        }
+
+        public NowBean getNow() {
+            return now;
+        }
+
+        public void setNow(NowBean now) {
+            this.now = now;
         }
 
         public String getStatus() {
@@ -48,12 +72,20 @@ public class Weather {
             this.status = status;
         }
 
-        public UpdateBean getUpdate() {
-            return update;
+        public SuggestionBean getSuggestion() {
+            return suggestion;
         }
 
-        public void setUpdate(UpdateBean update) {
-            this.update = update;
+        public void setSuggestion(SuggestionBean suggestion) {
+            this.suggestion = suggestion;
+        }
+
+        public List<AlarmsBean> getAlarms() {
+            return alarms;
+        }
+
+        public void setAlarms(List<AlarmsBean> alarms) {
+            this.alarms = alarms;
         }
 
         public List<DailyForecastBean> getDaily_forecast() {
@@ -64,57 +96,141 @@ public class Weather {
             this.daily_forecast = daily_forecast;
         }
 
-        public static class BasicBean {
+        public List<HourlyForecastBean> getHourly_forecast() {
+            return hourly_forecast;
+        }
+
+        public void setHourly_forecast(List<HourlyForecastBean> hourly_forecast) {
+            this.hourly_forecast = hourly_forecast;
+        }
+
+        public static class AqiBean {
             /**
-             * cid : CN101010100
-             * location : 北京
-             * parent_city : 北京
-             * admin_area : 北京
-             * cnty : 中国
-             * lat : 39.90498734
-             * lon : 116.40528870
-             * tz : 8.0
+             * city : {"aqi":"60","co":"0","no2":"14","o3":"95","pm10":"67","pm25":"15","qlty":"良","so2":"10"}
              */
 
-            private String cid;
-            private String location;
-            private String parent_city;
-            private String admin_area;
+            private CityBean city;
+
+            public CityBean getCity() {
+                return city;
+            }
+
+            public void setCity(CityBean city) {
+                this.city = city;
+            }
+
+            public static class CityBean {
+                /**
+                 * aqi : 60
+                 * co : 0
+                 * no2 : 14
+                 * o3 : 95
+                 * pm10 : 67
+                 * pm25 : 15
+                 * qlty : 良
+                 * so2 : 10
+                 */
+
+                private String aqi;
+                private String co;
+                private String no2;
+                private String o3;
+                private String pm10;
+                private String pm25;
+                private String qlty;
+                private String so2;
+
+                public String getAqi() {
+                    return aqi;
+                }
+
+                public void setAqi(String aqi) {
+                    this.aqi = aqi;
+                }
+
+                public String getCo() {
+                    return co;
+                }
+
+                public void setCo(String co) {
+                    this.co = co;
+                }
+
+                public String getNo2() {
+                    return no2;
+                }
+
+                public void setNo2(String no2) {
+                    this.no2 = no2;
+                }
+
+                public String getO3() {
+                    return o3;
+                }
+
+                public void setO3(String o3) {
+                    this.o3 = o3;
+                }
+
+                public String getPm10() {
+                    return pm10;
+                }
+
+                public void setPm10(String pm10) {
+                    this.pm10 = pm10;
+                }
+
+                public String getPm25() {
+                    return pm25;
+                }
+
+                public void setPm25(String pm25) {
+                    this.pm25 = pm25;
+                }
+
+                public String getQlty() {
+                    return qlty;
+                }
+
+                public void setQlty(String qlty) {
+                    this.qlty = qlty;
+                }
+
+                public String getSo2() {
+                    return so2;
+                }
+
+                public void setSo2(String so2) {
+                    this.so2 = so2;
+                }
+            }
+        }
+
+        public static class BasicBean {
+            /**
+             * city : 青岛
+             * cnty : 中国
+             * id : CN101120201
+             * lat : 36.088000
+             * lon : 120.343000
+             * prov : 山东
+             * update : {"loc":"2016-08-30 11:52","utc":"2016-08-30 03:52"}
+             */
+
+            private String city;
             private String cnty;
+            private String id;
             private String lat;
             private String lon;
-            private String tz;
+            private String prov;
+            private UpdateBean update;
 
-            public String getCid() {
-                return cid;
+            public String getCity() {
+                return city;
             }
 
-            public void setCid(String cid) {
-                this.cid = cid;
-            }
-
-            public String getLocation() {
-                return location;
-            }
-
-            public void setLocation(String location) {
-                this.location = location;
-            }
-
-            public String getParent_city() {
-                return parent_city;
-            }
-
-            public void setParent_city(String parent_city) {
-                this.parent_city = parent_city;
-            }
-
-            public String getAdmin_area() {
-                return admin_area;
-            }
-
-            public void setAdmin_area(String admin_area) {
-                this.admin_area = admin_area;
+            public void setCity(String city) {
+                this.city = city;
             }
 
             public String getCnty() {
@@ -123,6 +239,14 @@ public class Weather {
 
             public void setCnty(String cnty) {
                 this.cnty = cnty;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
             }
 
             public String getLat() {
@@ -141,110 +265,560 @@ public class Weather {
                 this.lon = lon;
             }
 
-            public String getTz() {
-                return tz;
+            public String getProv() {
+                return prov;
             }
 
-            public void setTz(String tz) {
-                this.tz = tz;
+            public void setProv(String prov) {
+                this.prov = prov;
+            }
+
+            public UpdateBean getUpdate() {
+                return update;
+            }
+
+            public void setUpdate(UpdateBean update) {
+                this.update = update;
+            }
+
+            public static class UpdateBean {
+                /**
+                 * loc : 2016-08-30 11:52
+                 * utc : 2016-08-30 03:52
+                 */
+
+                private String loc;
+                private String utc;
+
+                public String getLoc() {
+                    return loc;
+                }
+
+                public void setLoc(String loc) {
+                    this.loc = loc;
+                }
+
+                public String getUtc() {
+                    return utc;
+                }
+
+                public void setUtc(String utc) {
+                    this.utc = utc;
+                }
             }
         }
 
-        public static class UpdateBean {
+        public static class NowBean {
             /**
-             * loc : 2017-10-26 23:09
-             * utc : 2017-10-26 15:09
+             * cond : {"code":"100","txt":"晴"}
+             * fl : 28
+             * hum : 41
+             * pcpn : 0
+             * pres : 1005
+             * tmp : 26
+             * vis : 10
+             * wind : {"deg":"330","dir":"西北风","sc":"6-7","spd":"34"}
              */
 
-            private String loc;
-            private String utc;
+            private CondBean cond;
+            private String fl;
+            private String hum;
+            private String pcpn;
+            private String pres;
+            private String tmp;
+            private String vis;
+            private WindBean wind;
 
-            public String getLoc() {
-                return loc;
+            public CondBean getCond() {
+                return cond;
             }
 
-            public void setLoc(String loc) {
-                this.loc = loc;
+            public void setCond(CondBean cond) {
+                this.cond = cond;
             }
 
-            public String getUtc() {
-                return utc;
+            public String getFl() {
+                return fl;
             }
 
-            public void setUtc(String utc) {
-                this.utc = utc;
+            public void setFl(String fl) {
+                this.fl = fl;
+            }
+
+            public String getHum() {
+                return hum;
+            }
+
+            public void setHum(String hum) {
+                this.hum = hum;
+            }
+
+            public String getPcpn() {
+                return pcpn;
+            }
+
+            public void setPcpn(String pcpn) {
+                this.pcpn = pcpn;
+            }
+
+            public String getPres() {
+                return pres;
+            }
+
+            public void setPres(String pres) {
+                this.pres = pres;
+            }
+
+            public String getTmp() {
+                return tmp;
+            }
+
+            public void setTmp(String tmp) {
+                this.tmp = tmp;
+            }
+
+            public String getVis() {
+                return vis;
+            }
+
+            public void setVis(String vis) {
+                this.vis = vis;
+            }
+
+            public WindBean getWind() {
+                return wind;
+            }
+
+            public void setWind(WindBean wind) {
+                this.wind = wind;
+            }
+
+            public static class CondBean {
+                /**
+                 * code : 100
+                 * txt : 晴
+                 */
+
+                private String code;
+                private String txt;
+
+                public String getCode() {
+                    return code;
+                }
+
+                public void setCode(String code) {
+                    this.code = code;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class WindBean {
+                /**
+                 * deg : 330
+                 * dir : 西北风
+                 * sc : 6-7
+                 * spd : 34
+                 */
+
+                private String deg;
+                private String dir;
+                private String sc;
+                private String spd;
+
+                public String getDeg() {
+                    return deg;
+                }
+
+                public void setDeg(String deg) {
+                    this.deg = deg;
+                }
+
+                public String getDir() {
+                    return dir;
+                }
+
+                public void setDir(String dir) {
+                    this.dir = dir;
+                }
+
+                public String getSc() {
+                    return sc;
+                }
+
+                public void setSc(String sc) {
+                    this.sc = sc;
+                }
+
+                public String getSpd() {
+                    return spd;
+                }
+
+                public void setSpd(String spd) {
+                    this.spd = spd;
+                }
+            }
+        }
+
+        public static class SuggestionBean {
+            /**
+             * comf : {"brf":"较舒适","txt":"白天天气晴好，您在这种天气条件下，会感觉早晚凉爽、舒适，午后偏热。"}
+             * cw : {"brf":"较不宜","txt":"较不宜洗车，未来一天无雨，风力较大，如果执意擦洗汽车，要做好蒙上污垢的心理准备。"}
+             * drsg : {"brf":"热","txt":"天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。"}
+             * flu : {"brf":"较易发","txt":"虽然温度适宜但风力较大，仍较易发生感冒，体质较弱的朋友请注意适当防护。"}
+             * sport : {"brf":"较适宜","txt":"天气较好，但风力较大，推荐您进行室内运动，若在户外运动请注意防风。"}
+             * trav : {"brf":"适宜","txt":"天气较好，风稍大，但温度适宜，是个好天气哦。适宜旅游，您可以尽情地享受大自然的无限风光。"}
+             * uv : {"brf":"强","txt":"紫外线辐射强，建议涂擦SPF20左右、PA++的防晒护肤品。避免在10点至14点暴露于日光下。"}
+             */
+
+            private ComfBean comf;
+            private CwBean cw;
+            private DrsgBean drsg;
+            private FluBean flu;
+            private SportBean sport;
+            private TravBean trav;
+            private UvBean uv;
+
+            public ComfBean getComf() {
+                return comf;
+            }
+
+            public void setComf(ComfBean comf) {
+                this.comf = comf;
+            }
+
+            public CwBean getCw() {
+                return cw;
+            }
+
+            public void setCw(CwBean cw) {
+                this.cw = cw;
+            }
+
+            public DrsgBean getDrsg() {
+                return drsg;
+            }
+
+            public void setDrsg(DrsgBean drsg) {
+                this.drsg = drsg;
+            }
+
+            public FluBean getFlu() {
+                return flu;
+            }
+
+            public void setFlu(FluBean flu) {
+                this.flu = flu;
+            }
+
+            public SportBean getSport() {
+                return sport;
+            }
+
+            public void setSport(SportBean sport) {
+                this.sport = sport;
+            }
+
+            public TravBean getTrav() {
+                return trav;
+            }
+
+            public void setTrav(TravBean trav) {
+                this.trav = trav;
+            }
+
+            public UvBean getUv() {
+                return uv;
+            }
+
+            public void setUv(UvBean uv) {
+                this.uv = uv;
+            }
+
+            public static class ComfBean {
+                /**
+                 * brf : 较舒适
+                 * txt : 白天天气晴好，您在这种天气条件下，会感觉早晚凉爽、舒适，午后偏热。
+                 */
+
+                private String brf;
+                private String txt;
+
+                public String getBrf() {
+                    return brf;
+                }
+
+                public void setBrf(String brf) {
+                    this.brf = brf;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class CwBean {
+                /**
+                 * brf : 较不宜
+                 * txt : 较不宜洗车，未来一天无雨，风力较大，如果执意擦洗汽车，要做好蒙上污垢的心理准备。
+                 */
+
+                private String brf;
+                private String txt;
+
+                public String getBrf() {
+                    return brf;
+                }
+
+                public void setBrf(String brf) {
+                    this.brf = brf;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class DrsgBean {
+                /**
+                 * brf : 热
+                 * txt : 天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。
+                 */
+
+                private String brf;
+                private String txt;
+
+                public String getBrf() {
+                    return brf;
+                }
+
+                public void setBrf(String brf) {
+                    this.brf = brf;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class FluBean {
+                /**
+                 * brf : 较易发
+                 * txt : 虽然温度适宜但风力较大，仍较易发生感冒，体质较弱的朋友请注意适当防护。
+                 */
+
+                private String brf;
+                private String txt;
+
+                public String getBrf() {
+                    return brf;
+                }
+
+                public void setBrf(String brf) {
+                    this.brf = brf;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class SportBean {
+                /**
+                 * brf : 较适宜
+                 * txt : 天气较好，但风力较大，推荐您进行室内运动，若在户外运动请注意防风。
+                 */
+
+                private String brf;
+                private String txt;
+
+                public String getBrf() {
+                    return brf;
+                }
+
+                public void setBrf(String brf) {
+                    this.brf = brf;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class TravBean {
+                /**
+                 * brf : 适宜
+                 * txt : 天气较好，风稍大，但温度适宜，是个好天气哦。适宜旅游，您可以尽情地享受大自然的无限风光。
+                 */
+
+                private String brf;
+                private String txt;
+
+                public String getBrf() {
+                    return brf;
+                }
+
+                public void setBrf(String brf) {
+                    this.brf = brf;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class UvBean {
+                /**
+                 * brf : 强
+                 * txt : 紫外线辐射强，建议涂擦SPF20左右、PA++的防晒护肤品。避免在10点至14点暴露于日光下。
+                 */
+
+                private String brf;
+                private String txt;
+
+                public String getBrf() {
+                    return brf;
+                }
+
+                public void setBrf(String brf) {
+                    this.brf = brf;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+        }
+
+        public static class AlarmsBean {
+            /**
+             * level : 蓝色
+             * stat : 预警中
+             * title : 山东省青岛市气象台发布大风蓝色预警
+             * txt : 青岛市气象台2016年08月29日15时24分继续发布大风蓝色预警信号：预计今天下午到明天，我市北风风力海上6到7级阵风9级，陆地4到5阵风7级，请注意防范。
+             * type : 大风
+             */
+
+            private String level;
+            private String stat;
+            private String title;
+            private String txt;
+            private String type;
+
+            public String getLevel() {
+                return level;
+            }
+
+            public void setLevel(String level) {
+                this.level = level;
+            }
+
+            public String getStat() {
+                return stat;
+            }
+
+            public void setStat(String stat) {
+                this.stat = stat;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getTxt() {
+                return txt;
+            }
+
+            public void setTxt(String txt) {
+                this.txt = txt;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
             }
         }
 
         public static class DailyForecastBean {
             /**
-             * cond_code_d : 103
-             * cond_code_n : 101
-             * cond_txt_d : 晴间多云
-             * cond_txt_n : 多云
-             * date : 2017-10-26
-             * hum : 57
+             * astro : {"mr":"03:09","ms":"17:06","sr":"05:28","ss":"18:29"}
+             * cond : {"code_d":"100","code_n":"100","txt_d":"晴","txt_n":"晴"}
+             * date : 2016-08-30
+             * hum : 45
              * pcpn : 0.0
-             * pop : 0
-             * pres : 1020
-             * tmp_max : 16
-             * tmp_min : 8
-             * uv_index : 3
-             * vis : 16
-             * wind_deg : 0
-             * wind_dir : 无持续风向
-             * wind_sc : 微风
-             * wind_spd : 5
+             * pop : 8
+             * pres : 1005
+             * tmp : {"max":"29","min":"22"}
+             * vis : 10
+             * wind : {"deg":"339","dir":"北风","sc":"4-5","spd":"24"}
              */
 
-            private String cond_code_d;
-            private String cond_code_n;
-            private String cond_txt_d;
-            private String cond_txt_n;
+            private AstroBean astro;
+            private CondBeanX cond;
             private String date;
             private String hum;
             private String pcpn;
             private String pop;
             private String pres;
-            private String tmp_max;
-            private String tmp_min;
-            private String uv_index;
+            private TmpBean tmp;
             private String vis;
-            private String wind_deg;
-            private String wind_dir;
-            private String wind_sc;
-            private String wind_spd;
+            private WindBeanX wind;
 
-            public String getCond_code_d() {
-                return cond_code_d;
+            public AstroBean getAstro() {
+                return astro;
             }
 
-            public void setCond_code_d(String cond_code_d) {
-                this.cond_code_d = cond_code_d;
+            public void setAstro(AstroBean astro) {
+                this.astro = astro;
             }
 
-            public String getCond_code_n() {
-                return cond_code_n;
+            public CondBeanX getCond() {
+                return cond;
             }
 
-            public void setCond_code_n(String cond_code_n) {
-                this.cond_code_n = cond_code_n;
-            }
-
-            public String getCond_txt_d() {
-                return cond_txt_d;
-            }
-
-            public void setCond_txt_d(String cond_txt_d) {
-                this.cond_txt_d = cond_txt_d;
-            }
-
-            public String getCond_txt_n() {
-                return cond_txt_n;
-            }
-
-            public void setCond_txt_n(String cond_txt_n) {
-                this.cond_txt_n = cond_txt_n;
+            public void setCond(CondBeanX cond) {
+                this.cond = cond;
             }
 
             public String getDate() {
@@ -287,28 +861,12 @@ public class Weather {
                 this.pres = pres;
             }
 
-            public String getTmp_max() {
-                return tmp_max;
+            public TmpBean getTmp() {
+                return tmp;
             }
 
-            public void setTmp_max(String tmp_max) {
-                this.tmp_max = tmp_max;
-            }
-
-            public String getTmp_min() {
-                return tmp_min;
-            }
-
-            public void setTmp_min(String tmp_min) {
-                this.tmp_min = tmp_min;
-            }
-
-            public String getUv_index() {
-                return uv_index;
-            }
-
-            public void setUv_index(String uv_index) {
-                this.uv_index = uv_index;
+            public void setTmp(TmpBean tmp) {
+                this.tmp = tmp;
             }
 
             public String getVis() {
@@ -319,36 +877,324 @@ public class Weather {
                 this.vis = vis;
             }
 
-            public String getWind_deg() {
-                return wind_deg;
+            public WindBeanX getWind() {
+                return wind;
             }
 
-            public void setWind_deg(String wind_deg) {
-                this.wind_deg = wind_deg;
+            public void setWind(WindBeanX wind) {
+                this.wind = wind;
             }
 
-            public String getWind_dir() {
-                return wind_dir;
+            public static class AstroBean {
+                /**
+                 * mr : 03:09
+                 * ms : 17:06
+                 * sr : 05:28
+                 * ss : 18:29
+                 */
+
+                private String mr;
+                private String ms;
+                private String sr;
+                private String ss;
+
+                public String getMr() {
+                    return mr;
+                }
+
+                public void setMr(String mr) {
+                    this.mr = mr;
+                }
+
+                public String getMs() {
+                    return ms;
+                }
+
+                public void setMs(String ms) {
+                    this.ms = ms;
+                }
+
+                public String getSr() {
+                    return sr;
+                }
+
+                public void setSr(String sr) {
+                    this.sr = sr;
+                }
+
+                public String getSs() {
+                    return ss;
+                }
+
+                public void setSs(String ss) {
+                    this.ss = ss;
+                }
             }
 
-            public void setWind_dir(String wind_dir) {
-                this.wind_dir = wind_dir;
+            public static class CondBeanX {
+                /**
+                 * code_d : 100
+                 * code_n : 100
+                 * txt_d : 晴
+                 * txt_n : 晴
+                 */
+
+                private String code_d;
+                private String code_n;
+                private String txt_d;
+                private String txt_n;
+
+                public String getCode_d() {
+                    return code_d;
+                }
+
+                public void setCode_d(String code_d) {
+                    this.code_d = code_d;
+                }
+
+                public String getCode_n() {
+                    return code_n;
+                }
+
+                public void setCode_n(String code_n) {
+                    this.code_n = code_n;
+                }
+
+                public String getTxt_d() {
+                    return txt_d;
+                }
+
+                public void setTxt_d(String txt_d) {
+                    this.txt_d = txt_d;
+                }
+
+                public String getTxt_n() {
+                    return txt_n;
+                }
+
+                public void setTxt_n(String txt_n) {
+                    this.txt_n = txt_n;
+                }
             }
 
-            public String getWind_sc() {
-                return wind_sc;
+            public static class TmpBean {
+                /**
+                 * max : 29
+                 * min : 22
+                 */
+
+                private String max;
+                private String min;
+
+                public String getMax() {
+                    return max;
+                }
+
+                public void setMax(String max) {
+                    this.max = max;
+                }
+
+                public String getMin() {
+                    return min;
+                }
+
+                public void setMin(String min) {
+                    this.min = min;
+                }
             }
 
-            public void setWind_sc(String wind_sc) {
-                this.wind_sc = wind_sc;
+            public static class WindBeanX {
+                /**
+                 * deg : 339
+                 * dir : 北风
+                 * sc : 4-5
+                 * spd : 24
+                 */
+
+                private String deg;
+                private String dir;
+                private String sc;
+                private String spd;
+
+                public String getDeg() {
+                    return deg;
+                }
+
+                public void setDeg(String deg) {
+                    this.deg = deg;
+                }
+
+                public String getDir() {
+                    return dir;
+                }
+
+                public void setDir(String dir) {
+                    this.dir = dir;
+                }
+
+                public String getSc() {
+                    return sc;
+                }
+
+                public void setSc(String sc) {
+                    this.sc = sc;
+                }
+
+                public String getSpd() {
+                    return spd;
+                }
+
+                public void setSpd(String spd) {
+                    this.spd = spd;
+                }
+            }
+        }
+
+        public static class HourlyForecastBean {
+            /**
+             * cond : {"code":"100","txt":"晴"}
+             * date : 2016-08-30 12:00
+             * hum : 47
+             * pop : 0
+             * pres : 1006
+             * tmp : 29
+             * wind : {"deg":"335","dir":"西北风","sc":"4-5","spd":"36"}
+             */
+
+            private CondBeanXX cond;
+            private String date;
+            private String hum;
+            private String pop;
+            private String pres;
+            private String tmp;
+            private WindBeanXX wind;
+
+            public CondBeanXX getCond() {
+                return cond;
             }
 
-            public String getWind_spd() {
-                return wind_spd;
+            public void setCond(CondBeanXX cond) {
+                this.cond = cond;
             }
 
-            public void setWind_spd(String wind_spd) {
-                this.wind_spd = wind_spd;
+            public String getDate() {
+                return date;
+            }
+
+            public void setDate(String date) {
+                this.date = date;
+            }
+
+            public String getHum() {
+                return hum;
+            }
+
+            public void setHum(String hum) {
+                this.hum = hum;
+            }
+
+            public String getPop() {
+                return pop;
+            }
+
+            public void setPop(String pop) {
+                this.pop = pop;
+            }
+
+            public String getPres() {
+                return pres;
+            }
+
+            public void setPres(String pres) {
+                this.pres = pres;
+            }
+
+            public String getTmp() {
+                return tmp;
+            }
+
+            public void setTmp(String tmp) {
+                this.tmp = tmp;
+            }
+
+            public WindBeanXX getWind() {
+                return wind;
+            }
+
+            public void setWind(WindBeanXX wind) {
+                this.wind = wind;
+            }
+
+            public static class CondBeanXX {
+                /**
+                 * code : 100
+                 * txt : 晴
+                 */
+
+                private String code;
+                private String txt;
+
+                public String getCode() {
+                    return code;
+                }
+
+                public void setCode(String code) {
+                    this.code = code;
+                }
+
+                public String getTxt() {
+                    return txt;
+                }
+
+                public void setTxt(String txt) {
+                    this.txt = txt;
+                }
+            }
+
+            public static class WindBeanXX {
+                /**
+                 * deg : 335
+                 * dir : 西北风
+                 * sc : 4-5
+                 * spd : 36
+                 */
+
+                private String deg;
+                private String dir;
+                private String sc;
+                private String spd;
+
+                public String getDeg() {
+                    return deg;
+                }
+
+                public void setDeg(String deg) {
+                    this.deg = deg;
+                }
+
+                public String getDir() {
+                    return dir;
+                }
+
+                public void setDir(String dir) {
+                    this.dir = dir;
+                }
+
+                public String getSc() {
+                    return sc;
+                }
+
+                public void setSc(String sc) {
+                    this.sc = sc;
+                }
+
+                public String getSpd() {
+                    return spd;
+                }
+
+                public void setSpd(String spd) {
+                    this.spd = spd;
+                }
             }
         }
     }

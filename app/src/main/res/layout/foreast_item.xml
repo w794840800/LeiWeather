@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:id="@+id/foreast_item"
     android:layout_height="wrap_content"
     >
 
@@ -10,6 +11,8 @@
         android:text="2018-03-02"
         android:layout_weight="2"
         android:id="@+id/date_text"
+         android:textColor="#fff"
+        android:textSize="20sp"
         />
 <TextView
     android:layout_width="0dp"
@@ -17,10 +20,14 @@
     android:id="@+id/info_text"
     android:layout_weight="1"
     android:text="多云"
+    android:textColor="#fff"
+    android:textSize="20sp"
     android:gravity="center"
     />
 <TextView
     android:layout_width="0dp"
+    android:textColor="#fff"
+    android:textSize="20sp"
     android:layout_height="wrap_content"
     android:id="@+id/max_temp"
     android:text="11"
@@ -28,12 +35,15 @@
     android:layout_weight="1"
     />
     <TextView
+        android:textColor="#fff"
+        android:textSize="20sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/min_temp"
         android:layout_weight="1"
         android:text="3"
-        android:gravity="right"
+
+        android:gravity="center"
         />
 
 </LinearLayout>

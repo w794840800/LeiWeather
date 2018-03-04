@@ -8,11 +8,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="7C"
+    android:textColor="#fff"
     app:layout_constraintRight_toRightOf="parent"
     android:textSize="60sp"
     android:layout_marginRight="20dp"
     />
 <TextView
+    android:textColor="#fff"
     android:id="@+id/now_weather_status"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -22,6 +24,4 @@
     app:layout_constraintRight_toRightOf="parent"
     android:layout_marginRight="25dp"
     />
-
-
 </android.support.constraint.ConstraintLayout>
