@@ -96,7 +96,7 @@ public class ChooseFragment extends Fragment{
                     weatherActivity.swipeRefreshLayout.setRefreshing(true);
                     weatherActivity.drawerLayout.closeDrawers();
                     weatherActivity.requestWeather(selectCountry.getWeatherId());
-              }
+                }
               }
             }
         });

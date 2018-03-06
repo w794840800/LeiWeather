@@ -33,7 +33,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     TextView toobar_city;
     @BindView(R.id.toolbar_update_time)
@@ -69,6 +69,7 @@ public class WeatherActivity extends AppCompatActivity {
     String weatherId;
     //@BindView(R.id.drawer)
     public DrawerLayout drawerLayout;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +86,9 @@ public class WeatherActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         weatherId = getIntent().getStringExtra("weatherId");
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         nav_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +96,7 @@ public class WeatherActivity extends AppCompatActivity {
                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        if (sharedPreferences.getString("weather","")!=null){
+        if (sharedPreferences.getString("weather",null)!=null){
             Weather weather = Utility.handleWeatherResponse(sharedPreferences.getString("weather",""));
             weatherId = weather.getHeWeather5().get(0)
                     .getBasic().getId();
@@ -115,11 +117,22 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.d("wanglei ", "onRefresh: begin");
+
                 requestWeather(weatherId);
             }
         });
 
-
+          swipeRefreshLayout.post(new Runnable() {
+              @Override
+              public void run() {
+                  if (!swipeRefreshLayout.isRefreshing())
+                  {
+                      swipeRefreshLayout.setRefreshing(true);
+                      requestWeather(weatherId);
+                  }
+              }
+          });
     }
 
     private void loadWeatherbg() {
@@ -241,11 +254,22 @@ public class WeatherActivity extends AppCompatActivity {
                    .getSuggestion().getCw().getTxt());
                    sport_text.setText(weather.getHeWeather5().get(0)
                    .getSuggestion().getUv().getTxt());
-               swipeRefreshLayout.setRefreshing(false);
+                  swipeRefreshLayout.setRefreshing(false);
                }
 
            }
        });
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+            //swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
 
     }
 }
